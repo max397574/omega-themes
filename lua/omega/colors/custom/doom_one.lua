@@ -1,6 +1,6 @@
 local theme = require("omega.colors.themes.doom_one")
 local color_utils = require("omega.utils.colors")
-local config = require("omega.config")
+local config = require("omega.custom.config")
 vim.g.terminal_color_4 = "#51afef"
 vim.g.terminal_color_12 = "#51afef"
 
