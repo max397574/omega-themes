@@ -20,7 +20,7 @@ return {
     colors = {
         white = "#DCD7BA",
         darker_black = "#16161D",
-        black = "#1F1F28", --  nvim bg
+        black = "#1F1F28",
         black2 = "#25252e",
         one_bg = "#292932",
         one_bg2 = "#32323b",
@@ -34,7 +34,7 @@ return {
         red = "#8d77b0",
         baby_pink = "#E46876",
         pink = "#D27E99",
-        line = "#2e2e37", -- for lines like vertsplit
+        line = "#2e2e37",
         green = "#76946A",
         vibrant_green = "#98BB6C",
         dark_green = "#7fa253",
