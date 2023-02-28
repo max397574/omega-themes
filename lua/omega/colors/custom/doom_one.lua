@@ -1,8 +1,6 @@
 local theme = require("omega.colors.themes.doom_one")
 local color_utils = require("omega.utils.colors")
 local config = require("omega.custom.config")
-vim.g.terminal_color_4 = "#51afef"
-vim.g.terminal_color_12 = "#51afef"
 
 local highlights = {
     WarningMsg = { fg = theme.colors.white },
@@ -36,4 +34,10 @@ elseif config.ui.cmp.icons == "fg_colored" then
     end
 end
 
-return highlights
+return {
+    highlights = highlights,
+    code = {
+        [[vim.g.terminal_color_4 = "#51afef"]],
+        [[vim.g.terminal_color_12 = "#51afef"]],
+    },
+}

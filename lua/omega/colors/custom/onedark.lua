@@ -1,6 +1,10 @@
-vim.g.terminal_color_foreground = "#abb2bf"
 local colors = require("omega.colors.themes.onedark").colors
 return {
-    ["@tag"] = { fg = colors.blue },
-    ["IndentBlanklineChar"] = { fg = colors.orange },
+    highlights = {
+        ["@tag"] = { fg = colors.blue },
+        ["IndentBlanklineChar"] = { fg = colors.orange },
+    },
+    code = {
+        [[vim.g.terminal_color_foreground = "#abb2bf"]],
+    },
 }
