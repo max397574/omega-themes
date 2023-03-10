@@ -11,6 +11,6 @@ return {
         ["WinSeparator"] = { fg = colors.light_grey },
     },
     code = {
-        [[vim.g.terminal_color_foreground = ]] .. colors.white,
+        [[vim.g.terminal_color_foreground = "]] .. colors.white..'"',
     },
 }
