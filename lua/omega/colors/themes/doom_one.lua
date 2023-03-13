@@ -1,5 +1,5 @@
 return {
-    bg="dark",
+    bg = "dark",
     base16 = {
         base00 = "#282c34",
         base01 = "#2e323a",
