@@ -1,5 +1,5 @@
 return {
-    bg="light",
+    bg = "light",
     base16 = {
         base00 = "#fafafa",
         base01 = "#f0f0f0",
@@ -26,6 +26,7 @@ return {
         one_bg = "#ebebeb",
         one_bg2 = "#e1e1e1",
         one_bg3 = "#d7d7d7",
+        telescope_prompt = "#d7d7d7",
         grey = "#cdcdcd",
         grey_fg = "#b9b9b9",
         grey_fg2 = "#acacac",

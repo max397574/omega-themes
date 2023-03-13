@@ -3,7 +3,8 @@ local colors = require("omega.colors.themes.ayu_light").colors
 return {
     highlights = {
         TSField = { fg = base16.base0E },
-        PmenuSel = { fg = colors.white, bg = M.base_30.pmenu_bg },
+        IncSearch = { bg = colors.orange },
+        PmenuSel = { fg = colors.white, bg = colors.pmenu_bg },
         ["@tag.delimiter"] = { fg = colors.base0D },
         ["@parameter"] = { fg = base16.base09 },
         ["@constructor"] = { fg = base16.base0C },
