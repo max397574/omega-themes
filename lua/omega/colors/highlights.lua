@@ -56,6 +56,7 @@ local highlights = {
     ["Number"] = { fg = base16.base09 },
     ["Operator"] = { fg = base16.base05 },
     ["PreProc"] = { fg = base16.base0A },
+    ["Function"] = { fg = base16.base0D, italic = true },
     ["Repeat"] = { fg = base16.base0A },
     ["SpecialChar"] = { fg = base16.base0F },
     ["Statement"] = { fg = base16.base08 },
@@ -99,78 +100,146 @@ local highlights = {
     ["SpellLocal"] = { undercurl = true, sp = base16.base0C },
     ["SpellCap"] = { undercurl = true, sp = base16.base0D },
     ["SpellRare"] = { undercurl = true, sp = base16.base0E },
-    ["@comment"] = { fg = base16.base03, italic = true },
+
+    -- Treesitter highlights
+    -- =====================
+
+    -- Identifiers
+    ["@variable"] = { fg = base16.base05 }, -- various variable names
+    ["@variable.builtin"] = { fg = base16.base09 }, -- built-in variable names (e.g. `this`)
+    ["@variable.parameter"] = { fg = base16.base08 }, -- parameters of a function
+    ["@variable.member"] = { fg = base16.base08 }, -- object and struct fields
+
+    ["@constant"] = { fg = base16.base09 }, -- constant identifiers
+    ["@constant.builtin"] = { fg = base16.base09 }, -- built-in constant values
+    ["@constant.macro"] = { fg = base16.base08 }, -- constants defined by the preprocessor
+
+    ["@module"] = { fg = base16.base08 }, -- modules or namespaces
+    ["@module.builtin"] = { fg = base16.base08 }, -- built-in modules or namespaces
+    ["@label"] = { fg = base16.base0A }, -- GOTO and other labels (e.g. `label:` in C), including heredoc labels
+
+    -- Literals
+    -- --------
+    ["@string"] = { fg = base16.base0B }, -- string literals
+    ["@string.documentation"] = { fg = base16.base03, italic = true }, -- string documenting code (e.g. Python docstrings)
+    ["@string.regexp"] = { fg = base16.base0C }, -- regular expressions
+    ["@string.escape"] = { fg = base16.base0C }, -- escape sequences
+    ["@string.special"] = { fg = base16.base0C }, -- other special strings (e.g. dates)
+    ["@string.special.symbol"] = { fg = base16.base0B }, -- symbols or atoms
+    ["@string.special.url"] = { fg = base16.base09, underline = true }, -- URIs (e.g. hyperlinks)
+    ["@string.special.path"] = { fg = base16.base0C }, -- filenames
+
+    ["@character"] = { fg = base16.base08 }, -- character literals
+    ["@character.special"] = { fg = base16.base0F }, -- special characters (e.g. wildcards)
+
+    ["@boolean"] = { fg = base16.base09 }, -- boolean literals
+    ["@number"] = { fg = base16.base09 }, -- numeric literals
+    ["@number.float"] = { fg = base16.base09 }, -- floating-point number literals
+
+    -- Types
+    -- -----
+    ["@type"] = { fg = base16.base0A }, -- type or class definitions and annotations
+    ["@type.builtin"] = { fg = base16.base0A }, -- built-in types
+    ["@type.definition"] = { fg = base16.base0A }, -- identifiers in type definitions (e.g. `typedef <type> <identifier>` in C)
+    ["@type.qualifier"] = { fg = base16.base0A }, -- type qualifiers (e.g. `const`)
+
+    ["@attribute"] = { fg = base16.base0A }, -- attribute annotations (e.g. Python decorators)
+    ["@property"] = { fg = base16.base08 }, -- the key in key/value pairs
+
+    -- Functions
+    -- ---------
+    ["@function"] = { fg = base16.base0D, italic = true }, -- function definitions
+    ["@function.builtin"] = { fg = base16.base0D }, -- built-in functions
+    ["@function.call"] = { fg = base16.base0D }, -- function calls
+    ["@function.macro"] = { fg = base16.base08 }, -- preprocessor macros
+
+    ["@function.method"] = { fg = base16.base0D, italic = true }, -- method definitions
+    ["@function.method.call"] = { fg = base16.base0D }, -- method calls
+
+    ["@constructor"] = { fg = base16.base0C }, -- constructor calls and definitions
+    ["@operator"] = { fg = base16.base05 }, -- symbolic operators (e.g. `+` / `*`)
+
+    -- Keywords
+    -- --------
+    ["@keyword"] = { fg = base16.base0E }, -- keywords not fitting into specific categories
+    ["@keyword.corutine"] = { fg = base16.base0E }, -- keywords related to coroutines (e.g. `go` in Go, `async/await` in Python)
+    ["@keyword.function"] = { fg = base16.base0E }, -- keywords that define a function (e.g. `func` in Go, `def` in Python)
+    ["@keyword.operator"] = { fg = base16.base0E }, -- operators that are English words (e.g. `and` / `or`)
+    ["@keyword.import"] = { fg = base16.base0D }, -- keywords for including modules (e.g. `import` / `from` in Python)
+    ["@keyword.storage"] = { fg = base16.base0A }, -- modifiers that affect storage in memory or life-time
+    ["@keyword.repeat"] = { fg = base16.base0A }, -- keywords related to loops (e.g. `for` / `while`)
+    ["@keyword.return"] = { fg = base16.base0E }, -- keywords like `return` and `yield`
+    ["@keyword.debug"] = { fg = base16.base08 }, -- keywords related to debugging
+    ["@keyword.exception"] = { fg = base16.base08 }, -- keywords related to exceptions (e.g. `throw` / `catch`)
+
+    ["@keyword.conditional"] = { fg = base16.base0E, italic = true }, -- keywords related to conditionals (e.g. `if` / `else`)
+    ["@keyword.conditional.ternary"] = { fg = base16.base0E, italic = true }, -- ternary operator (e.g. `?` / `:`)
+
+    ["@keyword.directive"] = { fg = base16.base0A }, -- various preprocessor directives & shebangs
+    ["@keyword.directive.define"] = { fg = base16.base0A }, -- preprocessor definition directives
+
+    -- Punctuation
+    -- -----------
+    ["@punctuation.delimiter"] = { fg = base16.base0F }, -- delimiters (e.g. `;` / `.` / `,`)
+    ["@puncuation.bracket"] = { fg = base16.base0D }, -- brackets (e.g. `()` / `{}` / `[]`)
+    ["@punctuation.special"] = { fg = base16.base05 }, -- special symbols (e.g. `{}` in string interpolation)
+
+    -- Commments
+    -- ---------
+    ["@comment"] = { fg = base16.base03, italic = true }, -- line and block comments
+    ["@comment.documentation"] = { fg = base16.base03, italic = true }, -- comments documenting code
+
+    ["@comment.error"] = { fg = base16.base0F, bg = base16.base01 }, -- error-type comments (e.g. `ERROR`, `FIXME`, `DEPRECATED:`)
+    ["@comment.warning"] = { fg = base16.base0A, bg = base16.base01 }, -- warning-type comments (e.g. `WARNING:`, `FIX:`, `HACK:`)
+    ["@comment.todo"] = { fg = base16.base0A, bg = base16.base01 }, -- todo-type comments (e.g. `TODO:`, `WIP:`, `FIXME:`)
+    ["@comment.note"] = { fg = base16.base0D, bg = base16.base01 }, -- note-type comments (e.g. `NOTE:`, `INFO:`, `XXX`)
+
+    -- Markup
+    -- ------
+
+    ["@markup.strong"] = { bold = true }, -- bold text
+    ["@markup.italic"] = { italic = true }, -- italic text
+    ["@markup.strikethrough"] = { strikethrough = true }, -- struck-through text
+    ["@markup.underline"] = { underline = true }, -- underlined text (only for literal underline markup!)
+
+    ["@markup.heading"] = { bold = true, underline = true }, -- headings, titles (including markers)
+
+    ["@markup.quote"] = { link = "@markup.italic" }, -- block quotes
+    ["@markup.math"] = { fg = base16.base0C }, -- math environments (e.g. `$ ... $` in LaTeX)
+    ["@markup.environment"] = { fg = base16.base0D }, -- environments (e.g. in LaTeX)
+
+    ["@markup.link"] = { fg = base16.base09 }, -- text references, footnotes, citations, etc.
+    ["@markup.link.label"] = { fg = base16.base0C }, -- link, reference descriptions
+    ["@markup.link.url"] = { fg = base16.base09, underline = true }, -- URL-style links
+
+    ["@markup.raw"] = { fg = base16.base09 }, -- literal or verbatim text (e.g. inline code)
+    ["@markup.raw.block"] = { fg = base16.base09 }, -- literal or verbatim text as a stand-alone block
+    -- (use priority 90 for blocks with injections)
+
+    ["@markup.list"] = { fg = base16.base05 }, -- list markers
+    ["@markup.list.checked"] = { fg = colors.green }, -- checked todo-style list markers
+    ["@markup.list.unchecked"] = { fg = colors.red }, -- unchecked todo-style list markers
+
+    ["@diff.plus"] = { fg = base16.base0B }, -- added text (for diff files)
+    ["@diff.minus"] = { fg = base16.base08 }, -- deleted text (for diff files)
+    ["@diff.delta"] = { fg = base16.base09 }, -- changed text (for diff files)
+
+    ["@tag"] = { fg = base16.base0A }, -- XML-style tag names (and similar)
+    ["@tag.attribute"] = { fg = base16.base0A }, -- XML-style tag attributes
+    ["@tag.delimiter"] = { fg = base16.base0F }, -- XML-style tag delimiters
+
+    -- End of Treesitter highlights
+    -- =============================
+
     ["@error"] = { fg = base16.base08 },
     ["@none"] = { fg = base16.base05 },
-    ["@preproc"] = { fg = base16.base0A },
     ["@define"] = { fg = base16.base0A },
-    ["@operator"] = { fg = base16.base05 },
-    ["@punctuation.delimiter"] = { fg = base16.base0F },
-    ["@puncuation.bracket"] = { fg = base16.base0D },
-    ["@punctuation.special"] = { fg = base16.base05 },
-    ["@string"] = { fg = base16.base0B },
-    ["@string.regex"] = { fg = base16.base0C },
-    ["@string.escape"] = { fg = base16.base0C },
-    ["@string.special"] = { fg = base16.base0C },
-    ["@character"] = { fg = base16.base08 },
-    ["@character.special"] = { fg = base16.base0F },
-    ["@boolean"] = { fg = base16.base09 },
-    ["@number"] = { fg = base16.base09 },
-    ["@float"] = { fg = base16.base09 },
-    ["@function"] = { fg = base16.base0D, italic = true },
-    ["@function.builtin"] = { fg = base16.base0D },
-    ["@function.call"] = { fg = base16.base0D },
-    ["@function.macro"] = { fg = base16.base08 },
-    ["@method"] = { fg = base16.base0D, italic = true },
-    ["@method.call"] = { fg = base16.base0D },
-    ["@constructor"] = { fg = base16.base0C },
-    ["@parameter"] = { fg = base16.base08 },
-    ["@keyword"] = { fg = base16.base0E },
-    ["@keyword.function"] = { fg = base16.base0E },
-    ["@keyword.operator"] = { fg = base16.base0E },
-    ["@keyword.return"] = { fg = base16.base0E },
-    ["@conditional"] = { fg = base16.base0E, italic = true },
-    ["@repeat"] = { fg = base16.base0A },
-    ["@debug"] = { fg = base16.base08 },
-    ["@label"] = { fg = base16.base0A },
-    ["@include"] = { fg = base16.base0D },
-    ["@exception"] = { fg = base16.base08 },
-    ["@type"] = { fg = base16.base0A },
-    ["@type.builtin"] = { fg = base16.base0A },
-    ["@type.definition"] = { fg = base16.base0A },
-    ["@type.qualifier"] = { fg = base16.base0A },
-    ["@storageclass"] = { fg = base16.base0A },
-    ["@attribute"] = { fg = base16.base0A },
-    ["@field"] = { fg = base16.base08 },
-    ["@property"] = { fg = base16.base08 },
-    ["@variable"] = { fg = base16.base05 },
-    ["@variable.builtin"] = { fg = base16.base09 },
-    ["@constant"] = { fg = base16.base09 },
-    ["@constant.builtin"] = { fg = base16.base09 },
-    ["@constant.macro"] = { fg = base16.base08 },
-    ["@namespace"] = { fg = base16.base08 },
-    ["@symbol"] = { fg = base16.base0B },
     ["@text"] = { fg = base16.base05 },
-    ["@text.strong"] = { bold = true },
-    ["@text.emphasis"] = { fg = base16.base09, italic = true },
-    ["@text.underline"] = { fg = base16.base05, underline = true },
-    ["@text.strike"] = { fg = base16.base05, strikethrough = true },
-    ["@text.title"] = { bold = true, underline = true },
-    ["@text.literal"] = { fg = base16.base09 },
-    ["@text.uri"] = { fg = base16.base09, underline = true },
-    ["@text.math"] = { fg = base16.base0C },
-    ["@text.environment"] = { fg = base16.base0D },
-    ["@text.environment.name"] = { fg = base16.base05, italic = true },
-    ["@text.reference"] = { fg = base16.base09 },
-    ["@text.todo"] = { fg = base16.base0A, bg = base16.base01 },
-    ["@text.note"] = { fg = base16.base0D, bg = base16.base01 },
-    ["@text.warning"] = { fg = base16.base0A, bg = base16.base01 },
-    ["@text.danger"] = { fg = base16.base0F, bg = base16.base01 },
-    ["@text.diff.add"] = { fg = base16.base0B },
-    ["@text.diff.delete"] = { fg = base16.base08 },
-    ["@tag"] = { fg = base16.base0A },
-    ["@tag.attribute"] = { fg = base16.base0A },
-    ["@tag.delimiter"] = { fg = base16.base0F },
+    ["@markup.environment.name"] = { fg = base16.base05, italic = true },
+    ["@markup.emphasis"] = { fg = base16.base09, italic = true },
+    ["@comment.hint"] = { fg = base16.base0D, bg = base16.base01 },
+    ["@comment.info"] = { fg = base16.base0D, bg = base16.base01 },
+    ["@comment.danger"] = { fg = base16.base0F, bg = base16.base01 },
     ["@conceal"] = { fg = base16.base05 },
     ["@definition"] = { underline = true, sp = base16.base04 },
     ["@scope"] = { bold = true },
@@ -205,6 +274,15 @@ local highlights = {
     DiagnosticError = { fg = colors.red },
     DiagnosticInfo = { fg = colors.yellow },
     DiagnosticHint = { fg = colors.blue },
+    DiagnosticOk = { fg = colors.green },
+    DiagnosticUnnecessary = { fg = colors.grey_fg, underline = true, sp = colors.blue },
+    DiagnosticDeprecated = { fg = colors.grey_fg, sp = colors.red, underline = true },
+
+    DiagnosticUnderlineWarn = { sp = colors.orange, underline = true },
+    DiagnosticUnderlineError = { sp = colors.red, underline = true },
+    DiagnosticUnderlineInfo = { sp = colors.yellow, underline = true },
+    DiagnosticUnderlineHint = { sp = colors.blue, underline = true },
+    DiagnosticUnderlineOk = { sp = colors.green, underline = true },
 
     SpellBad = { undercurl = true, sp = colors.red },
 
@@ -370,7 +448,7 @@ local highlights = {
     ["@lsp.type.method"] = { link = "@function.call" },
     ["@lsp.typemod.function.public"] = { link = "@function.call" },
     ["@lsp.type.macro"] = { link = "@function.macro" },
-    ["@lsp.type.namespace"] = { link = "@namespace" },
+    ["@lsp.type.namespace"] = { link = "@module" },
 
     WhichKeyDesc = { fg = base16.base08 },
     WhichKeyFloat = { fg = base16.base08, bg = colors.darker_black },
@@ -422,7 +500,6 @@ local kind_highlights = {
     Identifier = base16.base08,
 }
 
-local color_utils = require("omega.utils.colors")
 if config.ui.cmp.icons == "blended" then
     for kind_name, hl in pairs(kind_highlights) do
         highlights[("CmpItemKind%s"):format(kind_name)] = {
@@ -442,8 +519,8 @@ elseif config.ui.cmp.icons == "fg_colored" then
     end
 end
 highlights["@neorg.todo_items.urgent.norg"] = { fg = colors.orange }
-highlights["@neorg.todo_items.undone.norg"] = { fg = colors.red }
-highlights["@neorg.todo_items.done.norg"] = { fg = colors.green }
+highlights["@neorg.todo_items.undone.norg"] = { link = "@markup.list.unchecked" }
+highlights["@neorg.todo_items.done.norg"] = { link = "@markup.list.checked" }
 highlights["@neorg.todo_items.on_hold.norg"] = { fg = colors.grey }
 highlights["@neorg.todo_items.cancelled.norg"] = { fg = colors.grey_fg }
 highlights["@neorg.todo_items.uncertain.norg"] = { fg = colors.purple }

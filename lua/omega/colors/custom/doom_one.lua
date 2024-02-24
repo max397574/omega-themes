@@ -6,7 +6,7 @@ local highlights = {
     WarningMsg = { fg = theme.colors.white },
     ErrorMsg = { fg = theme.colors.white },
     ["@punctuation.bracket"] = { fg = theme.colors.blue },
-    ["@field"] = { fg = theme.colors.pink },
+    ["@variable.member"] = { fg = theme.colors.pink },
     ["@function.call"] = { fg = theme.colors.purple },
     ["@function.builtin"] = { fg = color_utils.lighten_color(theme.colors.pink, 0.4) },
 }

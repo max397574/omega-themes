@@ -8,7 +8,7 @@ return {
         CmpBorder = { fg = color_utils.darken_color(colors.darker_black, 10) },
         IncSearch = { bg = color_utils.blend_colors(colors.orange, colors.black, 0.75) },
         ["@tag.delimiter"] = { fg = colors.base0D },
-        ["@parameter"] = { fg = base16.base09 },
+        ["@variable.parameter"] = { fg = base16.base09 },
         ["@constructor"] = { fg = base16.base0C },
         ["@tag.attribute"] = { fg = colors.base0F },
         TelescopePreviewLine = { bg = colors.grey_fg },

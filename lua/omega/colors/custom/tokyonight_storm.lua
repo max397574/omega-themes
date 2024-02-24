@@ -4,7 +4,7 @@ local colors = require("omega.colors").get()
 return {
     highlights = {
         ["@function.builtin"] = { fg = theme.base0c },
-        ["@field"] = { fg = colors.vibrant_green },
+        ["@variable.member"] = { fg = colors.vibrant_green },
         ["@operator"] = { fg = "#89FFDD" },
         ["@punctuation.delimiter"] = { fg = "#89FFDD" },
         ["@conditional"] = { fg = colors.purple },
