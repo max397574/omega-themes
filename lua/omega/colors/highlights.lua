@@ -268,7 +268,8 @@ local highlights = {
     Red = { fg = colors.red },
     Green = { fg = colors.green },
     EndOfBuffer = { fg = colors.black },
-    NormalFloat = { bg = colors.darker_black },
+    -- NormalFloat = { bg = colors.darker_black },
+    NormalFloat = {},
 
     DiagnosticWarn = { fg = colors.orange },
     DiagnosticError = { fg = colors.red },
