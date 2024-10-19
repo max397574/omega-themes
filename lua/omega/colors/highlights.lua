@@ -1,7 +1,10 @@
 local theme = require("omega.colors.themes." .. vim.g.colors_name)
 local colors = theme.colors
 local base16 = theme.base16
-local config = require("omega.custom.config")
+local ok, config = pcall(require, "omega.config")
+if not ok then
+    config = {}
+end
 local color_utils = require("omega.utils.colors")
 colors.tele_bg = colors.telescope_bg or colors.darker_black
 colors.tele_prompt = colors.telescope_prompt or colors.black2
@@ -451,23 +454,32 @@ local highlights = {
     ["@lsp.type.macro"] = { link = "@function.macro" },
     ["@lsp.type.namespace"] = { link = "@module" },
 
-    WhichKeyDesc = { fg = base16.base08 },
-    WhichKeyFloat = { fg = base16.base08, bg = colors.darker_black },
-    WhichKeySeparator = { fg = base16.base08, bg = colors.darker_black },
-    WhichKeyGroup = { fg = base16.base0D },
+    WhichKeyDesc = { fg = colors.cyan },
+    WhichKeyFloat = { fg = colors.cyan },
+    WhichKeySeparator = { fg = colors.cyan },
+    WhichKeyIcon = { fg = base16.base0A },
+    WhichKeyGroup = { fg = base16.base0C },
 }
 
 highlights["CmpItemAbbrMatch"] = { fg = colors.blue }
 highlights["CmpSource"] = { fg = colors.grey_fg }
 highlights["CmpSelected"] = { bg = color_utils.blend_colors(colors.blue, colors.darker_black, 0.3) }
-if config.ui.cmp.border == "half" then
+if config.ui.completion.border == "half" then
     highlights["CmpBorder"] = { fg = colors.darker_black, bg = colors.black }
     highlights["CmpNormal"] = { fg = colors.white, bg = colors.darker_black }
-elseif config.ui.cmp.border == "rounded" then
+    highlights["@care.menu"] = { fg = colors.white, bg = colors.darker_black }
+    highlights["@care.border"] = { fg = colors.darker_black, bg = colors.black }
+elseif config.ui.completion.border == "rounded" then
     highlights["CmpNormal"] = { fg = colors.white, bg = colors.black }
     highlights["CmpNormal"] = { fg = colors.white, bg = colors.darker_black }
-elseif config.ui.cmp.border == "none" then
+    highlights["@care.menu"] = { fg = colors.white, bg = colors.black }
+    highlights["@care.border"] = { fg = colors.white, bg = colors.black }
+elseif config.ui.completion.border == "up_to_edge" then
+    highlights["@care.menu"] = { fg = colors.white, bg = colors.darker_black }
+    highlights["@care.border"] = { fg = colors.grey, bg = colors.darker_black }
+elseif config.ui.completion.border == "none" then
     highlights["CmpNormal"] = { fg = colors.white, bg = colors.darker_black }
+    highlights["@care.menu"] = { fg = colors.white, bg = colors.darker_black }
 end
 
 local kind_highlights = {
@@ -501,7 +513,19 @@ local kind_highlights = {
     Identifier = base16.base08,
 }
 
-if config.ui.cmp.icons == "blended" then
+for kind_name, hl in pairs(kind_highlights) do
+    highlights[("@care.type.blended.%s"):format(kind_name)] = {
+        fg = hl,
+        bg = color_utils.blend_colors(hl, base16.base00, 0.15),
+    }
+    highlights[("@care.type.fg.%s"):format(kind_name)] = {
+        fg = hl,
+    }
+    highlights[("@care.type.%s"):format(kind_name)] = {
+        fg = hl,
+    }
+end
+if config.ui.completion.icons == "blended" then
     for kind_name, hl in pairs(kind_highlights) do
         highlights[("CmpItemKind%s"):format(kind_name)] = {
             fg = hl,
@@ -511,7 +535,7 @@ if config.ui.cmp.icons == "blended" then
         highlights[("CmpItemKindBlock%s"):format(kind_name)] =
             { fg = color_utils.blend_colors(hl, base16.base00, 0.15) }
     end
-elseif config.ui.cmp.icons == "fg_colored" then
+elseif config.ui.completion.icons == "fg_colored" then
     for kind_name, hl in pairs(kind_highlights) do
         highlights[("CmpItemKindMenu%s"):format(kind_name)] = { fg = hl }
         highlights[("CmpItemKind%s"):format(kind_name)] = {
